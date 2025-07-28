@@ -9,7 +9,7 @@ permissions: read-all
 
 jobs:
   build:
-    runs-on: windows-2022
+    runs-on: windows-latest
     name: Build PJRT
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
