@@ -19,6 +19,8 @@ jobs:
 
       - run: |
           git clone https://github.com/openxla/xla
+          cd xla
+          git checkout 6319f0d
 
       - run: |
           cd xla
