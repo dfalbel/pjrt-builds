@@ -24,10 +24,12 @@ jobs:
 
       - run: |
           choco install llvm
+          which clang
+          clang --version
 
       - run: |
           cd xla
-          ./configure.py --backend=cpu
+          ./configure.py --backend=cpu --os=windows --host_compiler=clang --clang_path=$(which clang)
 
       - run: |
           cd xla
