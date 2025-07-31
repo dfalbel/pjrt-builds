@@ -30,6 +30,10 @@ jobs:
       - run: |
           cd xla
           ./configure.py --backend=cpu --os=windows --host_compiler=clang --clang_path=$(which clang)
+          ls 
+
+      - run: |
+          cat xla_configure.bazelrc
 
       - run: |
           cd xla
