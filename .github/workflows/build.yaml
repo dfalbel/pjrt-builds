@@ -29,7 +29,7 @@ jobs:
 
       - run: |
           cd xla
-          python configure.py --backend=cpu --os=windows --host_compiler=clang --clang_path="$(which clang)"
+          python configure.py --backend=cpu --os=windows --host_compiler=clang --clang_path=C:\Program Files\LLVM\bin\clang.exe
           ls 
 
       - run: |
