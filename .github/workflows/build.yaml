@@ -33,8 +33,5 @@ jobs:
           ls 
 
       - run: |
-          cat xla_configure.bazelrc
-
-      - run: |
           cd xla
           bazel build --compiler=clang-cl //xla/pjrt/c:pjrt_c_api_cpu_plugin.so
