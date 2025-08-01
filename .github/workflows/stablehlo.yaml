@@ -20,11 +20,13 @@ jobs:
         include:
           - config: {os: mac}
             runner: macos-latest
+            shell: bash
           - config: {os: linux}
             runner: ubuntu-latest
             setup: |
               sudo apt update
               sudo apt install -y lld
+            shell: bash
           - config: {os: windows}
             runner: windows-latest
             shell: bash
