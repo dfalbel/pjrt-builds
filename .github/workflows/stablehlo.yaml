@@ -22,7 +22,10 @@ jobs:
       - run: |
           cd stablehlo
           git clone --depth=1 --single-branch https://github.com/llvm/llvm-project.git
-          (hash="$(cat ../build_tools/llvm_version.txt)"; cd llvm-project && git fetch "$hash" && git checkout "$hash")
+          cd llvm-project
+          hash="$(cat ../build_tools/llvm_version.txt)
+          git fetch "$hash"
+          git checkout "$hash"
 
       - run: |
           cd stablehlo
