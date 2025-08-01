@@ -26,30 +26,11 @@ jobs:
           clang --version
 
       - run: |
-          cat <<EOF > xla_configure.bazelrc
-          build --action_env CLANG_COMPILER_PATH=C:/Progra~1/LLVM/bin/clang-cl.exe
-          build --repo_env CC=C:/Progra~1/LLVM/bin/clang-cl.exe
-          build --repo_env BAZEL_COMPILER=C:/Progra~1/LLVM/bin/clang-cl.exe
-          build --linkopt --ld-path=C:/Progra~1/LLVM/bin/ld.lld.EXE
-          build --action_env PYTHON_BIN_PATH=C:/hostedtoolcache/windows/Python/3.9.13/x64/python.exe
-          build --python_path C:/hostedtoolcache/windows/Python/3.9.13/x64/python.exe
-          test --test_env LD_LIBRARY_PATH
-          test --test_size_filters small,medium
-          build --build_tag_filters -no_oss,-gpu
-          build --test_tag_filters -no_oss,-gpu
-          test --build_tag_filters -no_oss,-gpu
-          test --test_tag_filters -no_oss,-gpu
-          EOF
-        shell: bash
-        working-directory: ./xla
-
-      - run: |
           cd xla
-          #python configure.py --backend=cpu --os=windows --host_compiler=clang --clang_path="C://PROGRA~1//LLVM//bin//clang.exe" 
-          ls 
+          python configure.py --backend=cpu --os=windows --host_compiler=clang --clang_path=C:/PROGRA~1/LLVM/bin/clang.exe
           cat xla_configure.bazelrc
 
       - run: |
           cd xla
-          bazel build --config=win_clang //xla/pjrt/c:pjrt_c_api_cpu_plugin.so
+          bazel build --config=clang_local //xla/pjrt/c:pjrt_c_api_cpu_plugin.so
         shell: cmd
