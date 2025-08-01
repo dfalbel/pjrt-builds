@@ -29,12 +29,12 @@ jobs:
 
       - run: |
           cat <<EOF > xla_configure.bazelrc
-          build --action_env CLANG_COMPILER_PATH=C:\\Program Files\\LLVM\\bin\\clang.exe
-          build --repo_env CC=C:\\Program Files\\LLVM\\bin\\clang.exe
-          build --repo_env BAZEL_COMPILER=C:\\Program Files\\LLVM\\bin\\clang.exe
-          build --linkopt --ld-path=C:\\Program Files\\LLVM\\bin\\ld.lld.EXE
-          build --action_env PYTHON_BIN_PATH=C:\\hostedtoolcache\\windows\\Python\\3.9.13\\x64\\python.exe
-          build --python_path C:\\hostedtoolcache\\windows\\Python\\3.9.13\\x64\\python.exe
+          build --action_env CLANG_COMPILER_PATH=C:/Program Files/LLVM/bin/clang.exe
+          build --repo_env CC=C:/Program Files/LLVM/bin/clang.exe
+          build --repo_env BAZEL_COMPILER=C:/Program Files/LLVM/bin/clang.exe
+          build --linkopt --ld-path=C:/Program Files/LLVM/bin/ld.lld.EXE
+          build --action_env PYTHON_BIN_PATH=C:/hostedtoolcache/windows/Python/3.9.13/x64/python.exe
+          build --python_path C:/hostedtoolcache/windows/Python/3.9.13/x64/python.exe
           test --test_env LD_LIBRARY_PATH
           test --test_size_filters small,medium
           build --copt -Wno-sign-compare
