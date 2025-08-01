@@ -51,5 +51,5 @@ jobs:
 
       - run: |
           cd xla
-          bazel build --compiler=clang-cl //xla/pjrt/c:pjrt_c_api_cpu_plugin.so
+          bazel build --config=win_clang //xla/pjrt/c:pjrt_c_api_cpu_plugin.so
         shell: cmd
