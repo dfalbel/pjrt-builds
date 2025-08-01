@@ -57,3 +57,4 @@ jobs:
       - run: |
           cd xla
           bazel build //xla/pjrt/c:pjrt_c_api_cpu_plugin.so
+        shell: cmd
