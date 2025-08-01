@@ -29,9 +29,9 @@ jobs:
 
       - run: |
           cat <<EOF > xla_configure.bazelrc
-          build --action_env CLANG_COMPILER_PATH=C:/Progra~1/LLVM/bin/clang.exe
-          build --repo_env CC=C:/Progra~1/LLVM/bin/clang.exe
-          build --repo_env BAZEL_COMPILER=C:/Progra~1/LLVM/bin/clang.exe
+          build --action_env CLANG_COMPILER_PATH=C:/Progra~1/LLVM/bin/clang-cl.exe
+          build --repo_env CC=C:/Progra~1/LLVM/bin/clang-cl.exe
+          build --repo_env BAZEL_COMPILER=C:/Progra~1/LLVM/bin/clang-cl.exe
           build --linkopt --ld-path=C:/Progra~1/LLVM/bin/ld.lld.EXE
           build --action_env PYTHON_BIN_PATH=C:/hostedtoolcache/windows/Python/3.9.13/x64/python.exe
           build --python_path C:/hostedtoolcache/windows/Python/3.9.13/x64/python.exe
