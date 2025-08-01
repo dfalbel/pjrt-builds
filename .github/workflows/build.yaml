@@ -1,7 +1,5 @@
 on:
-  push:
-    branches: [main, master]
-  pull_request:
+  workflow_dispatch:
 
 name: Build PJRT
 
@@ -37,9 +35,6 @@ jobs:
           build --python_path C:/hostedtoolcache/windows/Python/3.9.13/x64/python.exe
           test --test_env LD_LIBRARY_PATH
           test --test_size_filters small,medium
-          build --copt -Wno-sign-compare
-          build --copt -Wno-error=unused-command-line-argument
-          build --copt -Wno-c23-extensions
           build --build_tag_filters -no_oss,-gpu
           build --test_tag_filters -no_oss,-gpu
           test --build_tag_filters -no_oss,-gpu
