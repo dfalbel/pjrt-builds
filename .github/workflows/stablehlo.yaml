@@ -1,0 +1,41 @@
+on:
+  workflow_dispatch:
+
+name: Build StableHLO
+
+permissions: read-all
+
+jobs:
+  build:
+    runs-on: macos-latest
+    name: Build StableHLO
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      LLVM_ENABLE_LLD: 'OFF'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: |
+          git clone --depth=1 --single-branch https://github.com/openxla/stablehlo
+
+      - run: |
+          cd stablehlo && git clone --depth=1 --single-branch https://github.com/llvm/llvm-project.git
+          (hash="$(cat ../build_tools/llvm_version.txt)"; cd llvm-project && git fetch "$hash" && git checkout "$hash")
+
+      - run: |
+          cd stablehlo
+          MLIR_ENABLE_BINDINGS_PYTHON=OFF build_tools/build_mlir.sh "${PWD}"/llvm-project/ "${PWD}"/llvm-build
+
+      - run: |
+          cd stablehlo
+          mkdir -p build && cd build
+
+          cmake .. -GNinja \
+            -DLLVM_ENABLE_LLD="$LLVM_ENABLE_LLD" \
+            -DCMAKE_BUILD_TYPE='Release' \
+            -DLLVM_ENABLE_ASSERTIONS='ON' \
+            -DSTABLEHLO_ENABLE_BINDINGS_PYTHON='OFF' \
+            -DMLIR_DIR="${PWD}"/../llvm-build/lib/cmake/mlir
+
+          cmake --build .
