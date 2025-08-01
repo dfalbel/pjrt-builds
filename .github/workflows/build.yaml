@@ -45,6 +45,7 @@ jobs:
           test --build_tag_filters -no_oss,-gpu
           test --test_tag_filters -no_oss,-gpu
           EOF
+        shell: bash
         working-directory: ./xla
 
       - run: |
