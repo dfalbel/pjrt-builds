@@ -27,6 +27,7 @@ jobs:
               sudo apt install -y lld
           - config: {os: windows}
             runner: windows-latest
+            shell: bash
     
     runs-on: ${{ matrix.runner }}
     name: StableHLO (${{ matrix.config.os }})
@@ -48,6 +49,7 @@ jobs:
           cd llvm-project
           hash="$(cat ../build_tools/llvm_version.txt)"
           git checkout $hash
+        shell: ${{ matrix.shell }}
 
       - run: |
           cd stablehlo
