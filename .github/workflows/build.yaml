@@ -23,7 +23,7 @@ jobs:
           git checkout 6319f0d
 
       - run: |
-          choco install llvm
+          choco install llvm --params "'/InstallDir=C:\llvm'" -y
           which clang
           clang --version
 
