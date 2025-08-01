@@ -10,17 +10,19 @@ jobs:
     
     strategy:
       matrix:
+        
         config: 
           - {os: mac}
           - {os: linux}
           - {os: windows}
-      include:
-        - config: {os: mac}
-          runner: macos-latest
-        - config: {os: linux}
-          runner: ubuntu-latest
-        - config: {os: windows}
-          runner: windows-latest
+
+        include:
+          - config: {os: mac}
+            runner: macos-latest
+          - config: {os: linux}
+            runner: ubuntu-latest
+          - config: {os: windows}
+            runner: windows-latest
     
     runs-on: {{ matrix.runner }}
     name: Build StableHLO
