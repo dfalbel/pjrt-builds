@@ -31,6 +31,11 @@ jobs:
     
     runs-on: ${{ matrix.runner }}
     name: StableHLO (${{ matrix.config.os }})
+
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       LLVM_ENABLE_LLD: 'OFF'
@@ -49,7 +54,6 @@ jobs:
           cd llvm-project
           hash="$(cat ../build_tools/llvm_version.txt)"
           git checkout $hash
-        shell: ${{ matrix.shell }}
 
       - run: |
           cd stablehlo
