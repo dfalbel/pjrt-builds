@@ -9,6 +9,7 @@ jobs:
   build:
     
     strategy:
+      fail-fast: false
       matrix:
         
         config: 
@@ -21,6 +22,9 @@ jobs:
             runner: macos-latest
           - config: {os: linux}
             runner: ubuntu-latest
+            setup: |
+              sudo apt update
+              sudo apt install -y lld
           - config: {os: windows}
             runner: windows-latest
     
@@ -32,6 +36,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - run: ${{ matrix.setup }}
 
       - run: |
           git clone --depth=1 --single-branch https://github.com/openxla/stablehlo
