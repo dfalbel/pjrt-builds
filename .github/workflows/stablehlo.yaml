@@ -24,8 +24,8 @@ jobs:
           - config: {os: windows}
             runner: windows-latest
     
-    runs-on: {{ matrix.runner }}
-    name: Build StableHLO
+    runs-on: ${{ matrix.runner }}
+    name: StableHLO (${{ matrix.config.os }})
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       LLVM_ENABLE_LLD: 'OFF'
