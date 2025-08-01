@@ -12,6 +12,10 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
+    defaults:
+      run:
+        shell: cmd
+
     steps:
       - uses: actions/checkout@v4
 
@@ -21,7 +25,7 @@ jobs:
           git checkout 6319f0d
 
       - run: |
-          choco install llvm --params "'/InstallDir=C:\llvm'" -y
+          choco install llvm -y
           which clang
           clang --version
 
@@ -33,4 +37,3 @@ jobs:
       - run: |
           cd xla
           bazel build --config=clang_local //xla/pjrt/c:pjrt_c_api_cpu_plugin.so
-        shell: cmd
