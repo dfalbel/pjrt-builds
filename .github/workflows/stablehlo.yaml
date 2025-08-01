@@ -20,7 +20,8 @@ jobs:
           git clone --depth=1 --single-branch https://github.com/openxla/stablehlo
 
       - run: |
-          cd stablehlo && git clone --depth=1 --single-branch https://github.com/llvm/llvm-project.git
+          cd stablehlo
+          git clone --depth=1 --single-branch https://github.com/llvm/llvm-project.git
           (hash="$(cat ../build_tools/llvm_version.txt)"; cd llvm-project && git fetch "$hash" && git checkout "$hash")
 
       - run: |
