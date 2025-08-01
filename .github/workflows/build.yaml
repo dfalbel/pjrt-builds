@@ -28,7 +28,6 @@ jobs:
           clang --version
 
       - run: |
-          cd xla
           cat <<EOF > xla_configure.bazelrc
           build --action_env CLANG_COMPILER_PATH=C:/Program Files/LLVM/bin/clang.exe
           build --repo_env CC=C:/Program Files/LLVM/bin/clang.exe
@@ -46,6 +45,7 @@ jobs:
           test --build_tag_filters -no_oss,-gpu
           test --test_tag_filters -no_oss,-gpu
           EOF
+        working-directory: ./xla
 
       - run: |
           cd xla
