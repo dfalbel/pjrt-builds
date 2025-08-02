@@ -93,6 +93,6 @@ jobs:
         with:
           files: ${{ env.FILENAME }}
           name: StableHLO
-          tagname: stablehlo
+          tag_name: stablehlo
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
