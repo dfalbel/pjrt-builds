@@ -44,7 +44,7 @@ jobs:
             shell: bash
           - config: {os: windows}
             runner: windows-latest
-            shell: bash
+            shell: cmd
             setup: |
               choco install llvm -y
     
