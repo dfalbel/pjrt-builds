@@ -45,6 +45,8 @@ jobs:
           - config: {os: windows}
             runner: windows-latest
             shell: bash
+            setup: |
+              choco install llvm -y
     
     runs-on: ${{ matrix.runner }}
     name: StableHLO (${{ matrix.config.os }})
