@@ -27,6 +27,14 @@ jobs:
             setup: |
               sudo apt update
               sudo apt install -y lld
+
+              # cleanup unused directories to free up space for the compilation
+              sudo rm -rf /usr/local/lib/android
+              sudo rm -rf /opt/ghc
+              sudo rm -rf /usr/share/dotnet
+              sudo rm -rf /opt/hostedtoolcache
+              sudo rm -rf /usr/local/share/boost
+              sudo rm -rf /usr/local/.ghcup
             shell: bash
           - config: {os: windows}
             runner: windows-latest
