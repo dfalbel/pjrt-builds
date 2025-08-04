@@ -47,6 +47,9 @@ jobs:
             shell: bash
             setup: |
               choco install llvm -y
+              # Use clang to compile, otherwise it defaults to MinGW which is failing.
+              echo "CC=clang" >> $GITHUB_ENV
+              echo "CXX=clang++" >> $GITHUB_ENV
     
     runs-on: ${{ matrix.runner }}
     name: StableHLO (${{ matrix.config.os }})
