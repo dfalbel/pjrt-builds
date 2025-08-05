@@ -1,33 +1,65 @@
 on:
   workflow_dispatch:
+  inputs:
+      commit_hash:
+        type: string
+        description: 'Commit hash to build from (default: 6319f0d)'
+        required: false
+        default: 6319f0d
 
 name: Build PJRT
 
-permissions: read-all
+permissions:
+  contents: write
 
 jobs:
   build:
-    runs-on: windows-latest
     name: Build PJRT
+
+    strategy:
+      fail-fast: false
+      matrix:
+        
+        config: 
+          - {os: mac}
+          - {os: linux}
+          - {os: windows}
+
+        include:
+          - config: {os: mac}
+            runner: macos-latest
+            artifact: bazel-bin/xla/pjrt/c/libpjrt_c_api_cpu_plugin.dylib
+            shell: bash
+          - config: {os: linux}
+            runner: ubuntu-latest
+            artifact: bazel-bin/xla/pjrt/c/libpjrt_c_api_cpu_plugin.so
+            shell: bash
+          - config: {os: windows}
+            runner: windows-latest
+            shell: bash
+            artifact: bazel-bin/xla/pjrt/c/pjrt_c_api_cpu_plugin.dll
+            setup: |
+              choco install llvm -y
+    
+    runs-on: ${{ matrix.runner }}
+
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      VERSION: ${{ github.event.inputs.commit_hash }}
 
     defaults:
       run:
-        shell: cmd
+        shell: ${{ matrix.shell }}
 
     steps:
       - uses: actions/checkout@v4
 
+      - run: ${{ matrix.setup }}
+
       - run: |
           git clone https://github.com/openxla/xla
           cd xla
-          git checkout 6319f0d
-
-      - run: |
-          choco install llvm -y
-          which clang
-          clang --version
+          git checkout ${{ github.event.inputs.commit_hash }}
 
       - run: |
           cd xla
@@ -37,3 +69,26 @@ jobs:
       - run: |
           cd xla
           bazel build --config=clang_local //xla/pjrt/c:pjrt_c_api_cpu_plugin.so
+
+      - name: Rename binary with OS info
+        shell: bash
+        run: |
+          OS=$(echo "${{ matrix.config.os }}" | cut -d'-' -f1)
+          ARCH=$(uname -m)
+          if [[ "$OS" == "windows" ]]; then
+            FILENAME="pjrt-${VERSION}-${OS}-${ARCH}.zip"
+            7z a "$FILENAME" ${{ matrix.artifact }}
+          else
+            FILENAME="pjrt-${VERSION}-${OS}-${ARCH}.tar.gz"
+            tar -czvf "$FILENAME" ${{ matrix.artifact }}
+          fi
+          echo "FILENAME=$FILENAME" >> $GITHUB_ENV
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.FILENAME }}
+          name: PJRT
+          tag_name: pjrt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
