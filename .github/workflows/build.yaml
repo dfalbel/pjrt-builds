@@ -1,6 +1,6 @@
 on:
   workflow_dispatch:
-  inputs:
+    inputs:
       commit_hash:
         type: string
         description: 'Commit hash to build from (default: 6319f0d)'
