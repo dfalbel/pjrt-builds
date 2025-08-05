@@ -40,6 +40,7 @@ jobs:
             artifact: bazel-bin/xla/pjrt/c/pjrt_c_api_cpu_plugin.dll
             setup: |
               choco install llvm -y
+            configure_args: --backend=cpu --os=windows --host_compiler=clang --clang_path=C:/PROGRA~1/LLVM/bin/clang.exe
     
     runs-on: ${{ matrix.runner }}
 
@@ -63,7 +64,7 @@ jobs:
 
       - run: |
           cd xla
-          python configure.py --backend=cpu --os=windows --host_compiler=clang --clang_path=C:/PROGRA~1/LLVM/bin/clang.exe
+          python configure.py ${{ matrix.configure_args }}
           cat xla_configure.bazelrc
 
       - run: |
