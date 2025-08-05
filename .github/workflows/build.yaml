@@ -80,10 +80,10 @@ jobs:
           ARCH=$(uname -m)
           if [[ "$OS" == "windows" ]]; then
             FILENAME="pjrt-${VERSION}-${OS}-${ARCH}.zip"
-            7z a "$FILENAME" ${{ matrix.artifact }}
+            7z a "$FILENAME" xla/${{ matrix.artifact }}
           else
             FILENAME="pjrt-${VERSION}-${OS}-${ARCH}.tar.gz"
-            tar -czvf "$FILENAME" ${{ matrix.artifact }}
+            tar -czvf "$FILENAME" xla/${{ matrix.artifact }}
           fi
           echo "FILENAME=$FILENAME" >> $GITHUB_ENV
 
