@@ -30,10 +30,12 @@ jobs:
             runner: macos-latest
             artifact: bazel-bin/xla/pjrt/c/libpjrt_c_api_cpu_plugin.dylib
             shell: bash
+            configure_args: --backend=cpu
           - config: {os: linux}
             runner: ubuntu-latest
             artifact: bazel-bin/xla/pjrt/c/libpjrt_c_api_cpu_plugin.so
             shell: bash
+            configure_args: --backend=cpu 
           - config: {os: windows}
             runner: windows-latest
             shell: bash
