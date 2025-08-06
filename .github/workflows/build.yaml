@@ -74,8 +74,8 @@ jobs:
         shell: bash
         run: |
           cd xla
-          # Replace all occurrences of "C:\Program Files\LLVM\bin" with "C:/PROGRA~1/LLVM/bin"
-          sed -i 's|C:\\Program Files\\LLVM\\bin|C:/PROGRA~1/LLVM/bin|g' xla_configure.bazelrc
+          # Convert all Windows-style backslashes to forward slashes for Bazel compatibility
+          sed -i 's|\\|/|g' xla_configure.bazelrc
           cat xla_configure.bazelrc
 
       - run: |
