@@ -45,7 +45,7 @@ jobs:
             setup: |
               choco install llvm -y
             configure_args: --backend=cpu --os=windows --host_compiler=clang --clang_path=C:/PROGRA~1/LLVM/bin/clang.exe
-            build_args: --config=clang_local --action_env=CC=C:/PROGRA~1/LLVM/bin/clang.exe --action_env=CXX=C:/PROGRA~1/LLVM/bin/clang++.exe
+            build_args: --action_env=CC=C:/PROGRA~1/LLVM/bin/clang.exe --action_env=CXX=C:/PROGRA~1/LLVM/bin/clang++.exe --linkopt="--ld-path=C:/PROGRA~1/LLVM/bin/ld.lld.exe"
     
     runs-on: ${{ matrix.runner }}
 
