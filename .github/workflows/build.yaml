@@ -31,11 +31,13 @@ jobs:
             artifact: bazel-bin/xla/pjrt/c/pjrt_c_api_cpu_plugin.so
             shell: bash
             configure_args: --backend=cpu
+            build_args: ""
           - config: {os: linux}
             runner: ubuntu-latest
             artifact: bazel-bin/xla/pjrt/c/pjrt_c_api_cpu_plugin.so
             shell: bash
-            configure_args: --backend=cpu 
+            configure_args: --backend=cpu
+            build_args: ""
           - config: {os: windows}
             runner: windows-latest
             shell: bash
@@ -43,6 +45,7 @@ jobs:
             setup: |
               choco install llvm -y
             configure_args: --backend=cpu --os=windows --host_compiler=clang --clang_path=C:/PROGRA~1/LLVM/bin/clang.exe
+            build_args: "--linkopt=--ld-path=C:/PROGRA~1/LLVM/bin/ld.lld.exe"
     
     runs-on: ${{ matrix.runner }}
 
@@ -71,7 +74,7 @@ jobs:
 
       - run: |
           cd xla
-          bazel build --config=clang_local //xla/pjrt/c:pjrt_c_api_cpu_plugin.so
+          bazel build --config=clang_local //xla/pjrt/c:pjrt_c_api_cpu_plugin.so ${{ matrix.build_args }}
 
       - name: Rename binary with OS info
         shell: bash
