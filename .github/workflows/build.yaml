@@ -74,7 +74,10 @@ jobs:
         shell: bash
         run: |
           cd xla
-          # Convert all Windows-style backslashes to forward slashes for Bazel compatibility
+          # Fix Windows paths for Bazel compatibility
+          # Replace "Program Files" with short name (handles both / and \ separators)
+          sed -i 's|Program Files|PROGRA~1|g' xla_configure.bazelrc
+          # Convert all backslashes to forward slashes
           sed -i 's|\\|/|g' xla_configure.bazelrc
           cat xla_configure.bazelrc
 
