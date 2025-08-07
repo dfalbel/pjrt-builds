@@ -41,7 +41,7 @@ jobs:
           - config: {os: windows}
             runner: windows-latest
             shell: bash
-            artifact: bazel-bin/xla/pjrt/c/pjrt_c_api_cpu_plugin.dll
+            artifact: bazel-bin/xla/pjrt/c/pjrt_c_api_cpu_plugin.so
             setup: |
               choco install llvm -y
               # Remove MSVC from PATH to force clang usage
