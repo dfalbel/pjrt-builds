@@ -47,7 +47,37 @@ jobs:
               # Remove MSVC from PATH to force clang usage
               echo "PATH=$(echo $PATH | tr ':' '\n' | grep -v 'Microsoft Visual Studio' | grep -v 'VC/Tools/MSVC' | tr '\n' ':')" >> $GITHUB_ENV
             configure_args: --backend=cpu --os=windows --host_compiler=clang --clang_path=C:/PROGRA~1/LLVM/bin/clang.exe
-            build_args: --config=clang_local --action_env=CC=C:/PROGRA~1/LLVM/bin/clang.exe --action_env=CXX=C:/PROGRA~1/LLVM/bin/clang++.exe --linkopt="--ld-path=C:/PROGRA~1/LLVM/bin/ld.lld.exe" --repo_env=BAZEL_COMPILER=C:/PROGRA~1/LLVM/bin/clang.exe --repo_env=USE_CLANG_CL=1 --copt=-march=native
+            build_args: | 
+                --config=clang_local \
+                --action_env=CC=C:/PROGRA~1/LLVM/bin/clang.exe \
+                --action_env=CXX=C:/PROGRA~1/LLVM/bin/clang++.exe \
+                --linkopt="--ld-path=C:/PROGRA~1/LLVM/bin/ld.lld.exe" \
+                --repo_env=BAZEL_COMPILER=C:/PROGRA~1/LLVM/bin/clang.exe \
+                --repo_env=USE_CLANG_CL=1 \
+                --copt=-march=native \
+                --define=XNN_ENABLE_ARM_FP16_SCALAR=false \
+                --define=XNN_ENABLE_ARM_FP16_VECTOR=false \
+                --define=XNN_ENABLE_ARM_BF16=false \
+                --define=XNN_ENABLE_ARM_DOTPROD=false \
+                --define=XNN_ENABLE_ARM_I8MM=false \
+                --define=XNN_ENABLE_ARM_SME=false \
+                --define=XNN_ENABLE_ARM_SME2=false \
+                --define=XNN_ENABLE_RISCV_VECTOR=false \
+                --define=XNN_ENABLE_RISCV_FP16_VECTOR=false \
+                --define=XNN_ENABLE_AVXVNNI=false \
+                --define=XNN_ENABLE_AVXVNNIINT8=false \
+                --define=XNN_ENABLE_AVX256SKX=false \
+                --define=XNN_ENABLE_AVX256VNNI=false \
+                --define=XNN_ENABLE_AVX256VNNIGFNI=false \
+                --define=XNN_ENABLE_AVX512F=false \
+                --define=XNN_ENABLE_AVX512SKX=false \
+                --define=XNN_ENABLE_AVX512VBMI=false \
+                --define=XNN_ENABLE_AVX512VNNI=false \
+                --define=XNN_ENABLE_AVX512VNNIGFNI=false \
+                --define=XNN_ENABLE_AVX512AMX=false \
+                --define=XNN_ENABLE_AVX512FP16=false \
+                --define=XNN_ENABLE_AVX512BF16=false \
+                --define=XNN_ENABLE_HVX=false
     
     runs-on: ${{ matrix.runner }}
 
