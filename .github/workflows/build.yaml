@@ -77,7 +77,7 @@ jobs:
                 --define=XNN_ENABLE_AVX512AMX=false \
                 --define=XNN_ENABLE_AVX512FP16=false \
                 --define=XNN_ENABLE_AVX512BF16=false \
-                --define=XNN_ENABLE_HVX=false
+                --define=XNN_ENABLE_HVX=false \
     
     runs-on: ${{ matrix.runner }}
 
