@@ -28,20 +28,20 @@ jobs:
         include:
           - config: {os: mac}
             runner: macos-latest
-            artifact: bazel-bin/xla/pjrt/c/pjrt_c_api_cpu_plugin.so
+            artifact_name: libpjrt_cpu.so
             shell: bash
             configure_args: --backend=cpu
             build_args: --config=clang_local
           - config: {os: linux}
             runner: ubuntu-latest
-            artifact: bazel-bin/xla/pjrt/c/pjrt_c_api_cpu_plugin.so
+            artifact_name: libpjrt_cpu.dylib
             shell: bash
             configure_args: --backend=cpu
             build_args: --config=clang_local
           - config: {os: windows}
             runner: windows-latest
             shell: bash
-            artifact: bazel-bin/xla/pjrt/c/pjrt_c_api_cpu_plugin.so
+            artifact_name: pjrt_cpu.dll
             setup: |
               choco install llvm -y
               # Remove MSVC from PATH to force clang usage
@@ -95,12 +95,13 @@ jobs:
         run: |
           OS=$(echo "${{ matrix.config.os }}" | cut -d'-' -f1)
           ARCH=$(uname -m)
+          cp xla/bazel-bin/xla/pjrt/c/pjrt_c_api_cpu_plugin.so ${{ matrix.artifact_name }}
           if [[ "$OS" == "windows" ]]; then
             FILENAME="pjrt-${VERSION}-${OS}-${ARCH}.zip"
-            7z a "$FILENAME" xla/${{ matrix.artifact }}
+            7z a "$FILENAME" ${{ matrix.artifact_name }}
           else
             FILENAME="pjrt-${VERSION}-${OS}-${ARCH}.tar.gz"
-            tar -czvf "$FILENAME" xla/${{ matrix.artifact }}
+            tar -czvf "$FILENAME" ${{ matrix.artifact_name }}
           fi
           echo "FILENAME=$FILENAME" >> $GITHUB_ENV
 
