@@ -47,7 +47,7 @@ jobs:
               # Remove MSVC from PATH to force clang usage
               echo "PATH=$(echo $PATH | tr ':' '\n' | grep -v 'Microsoft Visual Studio' | grep -v 'VC/Tools/MSVC' | tr '\n' ':')" >> $GITHUB_ENV
             configure_args: --backend=cpu --os=windows --host_compiler=clang --clang_path=C:/PROGRA~1/LLVM/bin/clang.exe
-            build_args: --config=clang_local --action_env=CC=C:/PROGRA~1/LLVM/bin/clang.exe --action_env=CXX=C:/PROGRA~1/LLVM/bin/clang++.exe --linkopt="--ld-path=C:/PROGRA~1/LLVM/bin/ld.lld.exe" --repo_env=BAZEL_COMPILER=C:/PROGRA~1/LLVM/bin/clang.exe --repo_env=USE_CLANG_CL=1 --copt=-mssse3 --copt=-mavx2 --copt=-mbmi2 --copt=-mfma --copt=-mpopcnt --copt=-mbmi --copt=-mlzcnt --copt=-mabm --copt=-msse4.1 --copt=-msse4.2 --copt=-mavxvnni --copt=-mavx512f --copt=-mavx512vl --copt=-mf16c --copt=-mavx512bw --copt=-mavx512dq --copt=-mavx512cd --copt=-mavx512ifma --copt=-mavx512vbmi2 --copt=-mavx512vnni --copt=-mavx512bitalg --copt=-mavx512vpopcntdq --copt=-mavxvnniint8 --copt=-mavx512f --copt=-mgfni --copt=-mavx512vl --copt=-mavx512bw --copt=-mavx512dq --copt=-march=icelake-server
+            build_args: --config=clang_local --action_env=CC=C:/PROGRA~1/LLVM/bin/clang.exe --action_env=CXX=C:/PROGRA~1/LLVM/bin/clang++.exe --linkopt="--ld-path=C:/PROGRA~1/LLVM/bin/ld.lld.exe" --repo_env=BAZEL_COMPILER=C:/PROGRA~1/LLVM/bin/clang.exe --repo_env=USE_CLANG_CL=1 --copt=-march=native
     
     runs-on: ${{ matrix.runner }}
 
