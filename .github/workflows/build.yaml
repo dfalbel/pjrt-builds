@@ -78,6 +78,7 @@ jobs:
                 --define xnn_enable_avx512fp16=false \
                 --define xnn_enable_avx512bf16=false \
                 --define xnn_enable_hvx=false \
+                --linkopt=-Wl,--export-all-symbols \
     
     runs-on: ${{ matrix.runner }}
 
