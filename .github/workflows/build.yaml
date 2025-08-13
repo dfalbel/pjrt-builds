@@ -119,8 +119,9 @@ jobs:
           
           # add a DEF file
           echo "LIBRARY pjrt_cpu" >> pjrt_cpu.def
-          echo "EXPORTS" >> pjrt_cpu.def
-          echo "    GetPjrtApi" >> pjrt_cpu.def
+          echo "EXPORTS"          >> pjrt_cpu.def
+          echo "    GetPjrtApi"   >> pjrt_cpu.def
+          echo "    _GetPjrtApi"  >> pjrt_cpu.def
           echo "DEF file ---------------"
           cat pjrt_cpu.def
 
