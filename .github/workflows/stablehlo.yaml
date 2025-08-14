@@ -79,7 +79,9 @@ jobs:
           hash="$(cat ../build_tools/llvm_version.txt)"
           git checkout $hash
 
-      - run: ${{ matrix.patch }}
+      - run: |
+          cd stablehlo
+          ${{ matrix.patch }}
 
       - run: |
           cd stablehlo
