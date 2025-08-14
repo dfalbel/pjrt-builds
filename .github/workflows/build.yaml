@@ -78,7 +78,6 @@ jobs:
                 --define xnn_enable_avx512fp16=false \
                 --define xnn_enable_avx512bf16=false \
                 --define xnn_enable_hvx=false \
-                --linkopt=/DEF:pjrt_cpu.def \
     
     runs-on: ${{ matrix.runner }}
 
@@ -116,14 +115,9 @@ jobs:
           # Convert all backslashes to forward slashes
           sed -i 's|\\|/|g' xla_configure.bazelrc
           cat xla_configure.bazelrc
-          
-          # add a DEF file
-          echo "LIBRARY pjrt_cpu" >> pjrt_cpu.def
-          echo "EXPORTS"          >> pjrt_cpu.def
-          echo "    GetPjrtApi"   >> pjrt_cpu.def
-          echo "    _GetPjrtApi"  >> pjrt_cpu.def
-          echo "DEF file ---------------"
-          cat pjrt_cpu.def
+
+          echo "Applying patch ---------------"
+          git apply ../patch/pjrt/export.patch
 
       - run: |
           cd xla
