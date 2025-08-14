@@ -1,0 +1,12 @@
+diff --git a/build_tools/build_mlir.sh b/build_tools/build_mlir.sh
+index c0311c33..0f6b37c2 100755
+--- a/build_tools/build_mlir.sh
++++ b/build_tools/build_mlir.sh
+@@ -58,6 +58,7 @@ cmake -GNinja \
+   -DLLVM_INCLUDE_TOOLS=ON \
+   -DMLIR_ENABLE_BINDINGS_PYTHON="${MLIR_ENABLE_BINDINGS_PYTHON}" \
+   -DLLVM_ENABLE_BINDINGS=OFF \
++  -DLLVM_DISABLE_ASSEMBLY_FILES=ON \
+   -DLLVM_VERSION_SUFFIX="" \
+   -DCMAKE_PLATFORM_NO_VERSIONED_SONAME:BOOL=ON \
+   -DLLVM_BUILD_TOOLS=OFF \

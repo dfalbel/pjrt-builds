@@ -50,6 +50,7 @@ jobs:
               # Use clang to compile, otherwise it defaults to MinGW which is failing.
               echo "CC=clang-cl" >> $GITHUB_ENV
               echo "CXX=clang-cl" >> $GITHUB_ENV
+            patch: git apply ../patch/stablehlo/disable-assembler.patch
     
     runs-on: ${{ matrix.runner }}
     name: StableHLO (${{ matrix.config.os }})
@@ -78,6 +79,8 @@ jobs:
           hash="$(cat ../build_tools/llvm_version.txt)"
           git checkout $hash
 
+      - run: ${{ matrix.patch }}
+
       - run: |
           cd stablehlo
           MLIR_ENABLE_BINDINGS_PYTHON=OFF build_tools/build_mlir.sh "${PWD}"/llvm-project/ "${PWD}"/llvm-build
@@ -91,6 +94,7 @@ jobs:
             -DCMAKE_BUILD_TYPE='Release' \
             -DLLVM_ENABLE_ASSERTIONS='ON' \
             -DSTABLEHLO_ENABLE_BINDINGS_PYTHON='OFF' \
+            ${{ matrix.cmake_flags }} \
             -DMLIR_DIR="${PWD}"/../llvm-build/lib/cmake/mlir
 
           cmake --build .
