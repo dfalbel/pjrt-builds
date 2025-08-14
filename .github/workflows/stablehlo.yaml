@@ -108,10 +108,12 @@ jobs:
           ARCH=$(uname -m)
           if [[ "$OS" == "windows" ]]; then
             FILENAME="stablehlo-opt-${VERSION}-${OS}-${ARCH}.zip"
-            7z a "$FILENAME" stablehlo/build/bin/stablehlo-opt.exe
+            cp stablehlo/build/bin/stablehlo-opt.exe stablehlo-opt.exe
+            7z a "$FILENAME" stablehlo-opt.exe
           else
             FILENAME="stablehlo-opt-${VERSION}-${OS}-${ARCH}.tar.gz"
-            tar -czvf "$FILENAME" stablehlo/build/bin/stablehlo-opt
+            cp stablehlo/build/bin/stablehlo-opt stablehlo-opt
+            tar -czvf "$FILENAME" stablehlo-opt
           fi
           echo "FILENAME=$FILENAME" >> $GITHUB_ENV
 
