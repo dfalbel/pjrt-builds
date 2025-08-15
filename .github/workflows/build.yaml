@@ -23,6 +23,7 @@ jobs:
         config: 
           - {os: mac}
           - {os: linux}
+          - {os: linux, plugin: gpu}
           - {os: windows}
 
         include:
@@ -32,16 +33,24 @@ jobs:
             shell: bash
             configure_args: --backend=cpu
             build_args: --config=clang_local
+            target: pjrt_c_api_cpu_plugin.so
           - config: {os: linux}
             runner: ubuntu-latest
             artifact_name: libpjrt_cpu.dylib
             shell: bash
             configure_args: --backend=cpu
             build_args: --config=clang_local
+            target: pjrt_c_api_cpu_plugin.so
+          - config: {os: linux, plugin: gpu}
+            runner: ubuntu-latest
+            artifact_name: libpjrt_gpu.so
+            shell: bash
+            target: pjrt_c_api_gpu_plugin.so
           - config: {os: windows}
             runner: windows-latest
             shell: bash
             artifact_name: pjrt_cpu.dll
+            target: pjrt_c_api_cpu_plugin.so
             setup: |
               choco install llvm -y
               # Remove MSVC from PATH to force clang usage
@@ -121,14 +130,14 @@ jobs:
 
       - run: |
           cd xla
-          bazel build ${{ matrix.build_args }} //xla/pjrt/c:pjrt_c_api_cpu_plugin.so
+          bazel build ${{ matrix.build_args }} //xla/pjrt/c:${{ matrix.target }}
 
       - name: Rename binary with OS info
         shell: bash
         run: |
           OS=$(echo "${{ matrix.config.os }}" | cut -d'-' -f1)
           ARCH=$(uname -m)
-          cp xla/bazel-bin/xla/pjrt/c/pjrt_c_api_cpu_plugin.so ${{ matrix.artifact_name }}
+          cp xla/bazel-bin/xla/pjrt/c/${{ matrix.target }} ${{ matrix.artifact_name }}
           if [[ "$OS" == "windows" ]]; then
             FILENAME="pjrt-${VERSION}-${OS}-${ARCH}.zip"
             7z a "$FILENAME" ${{ matrix.artifact_name }}
@@ -142,7 +151,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ env.FILENAME }}
-          name: PJRT
-          tag_name: pjrt
+          name: PJRT ${{ matrix.plugin}}
+          tag_name: pjrt${{matrix.plugin}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
