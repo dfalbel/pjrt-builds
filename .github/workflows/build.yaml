@@ -151,7 +151,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ env.FILENAME }}
-          name: PJRT ${{ matrix.plugin}}
-          tag_name: pjrt${{matrix.plugin}}
+          name: PJRT ${{ matrix.config.plugin}}
+          tag_name: pjrt${{matrix.config.plugin}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
